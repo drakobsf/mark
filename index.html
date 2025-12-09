@@ -119,6 +119,11 @@ button:hover{ background:#1f5fe0; }
     font-weight:700;
     margin:5px 0;
 }
+input::placeholder{
+    color:#999;
+    font-size:12px;
+}
+
 
 .download{
     margin-top:20px;
@@ -158,33 +163,33 @@ button:hover{ background:#1f5fe0; }
 <h3>Internal Marks</h3>
 <div class="marks-grid">
     <div></div>
-    <div class="head">PT-1</div>
+    <div class="head" >PT-1</div>
     <div class="head">Half-Yearly</div>
     <div class="head">PT-3</div>
 
     <div class="subject">Physics</div>
-    <input id="phy1"><input id="phy3"><input id="phy2">
+    <input id="phy1" placeholder="PT-1"><input id="phy3" placeholder="Half"><input id="phy2" placeholder="PT-3">
 
     <div class="subject">Chemistry</div>
-    <input id="chem1"><input id="chem3"><input id="chem2">
+    <input id="chem1" placeholder="PT-1"><input id="chem3" placeholder="Half"><input id="chem2" placeholder="PT-3">
 
     <div class="subject">Math / Bio</div>
-    <input id="math1"><input id="math3"><input id="math2">
+    <input id="math1" placeholder="PT-1"><input id="math3" placeholder="Half"><input id="math2" placeholder="PT-3">
 
     <div class="subject">CS</div>
-    <input id="cs1"><input id="cs3"><input id="cs2">
+    <input id="cs1" placeholder="PT-1"><input id="cs3" placeholder="Half"><input id="cs2" placeholder="PT-3">
 
     <div class="subject">English</div>
-    <input id="eng1"><input id="eng3"><input id="eng2">
+    <input id="eng1 placeholder="PT-1""><input id="eng3" placeholder="Half"><input id="eng2" placeholder="PT-3">
 </div>
 
 <h3>Target Marks</h3>
 <div class="targets">
-    Physics (70) <input id="pz">
-    Chemistry (70) <input id="cz">
-    Math/Bio (80) <input id="mz">
-    CS (70) <input id="csz">
-    English (80) <input id="ez">
+    Physics (70) <input id="pz" placeholder="Target">
+    Chemistry (70) <input id="cz" placeholder="Target">
+    Math/Bio (80) <input id="mz" placeholder="Target">
+    CS (70) <input id="csz" placeholder="Target">
+    English (80) <input id="ez" placeholder="Target">
 </div>
 
 <button onclick="calculateMarks()">Calculate</button>
