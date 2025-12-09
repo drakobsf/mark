@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Marks Calculator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+body{
+    font-family:Poppins,sans-serif;
+    background:linear-gradient(135deg,#e3f2ff,#f9fbff);
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+.box{
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    max-width:900px;
+    width:100%;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+h2{
+    text-align:center;
+    color:#2a74ff;
+    margin-bottom:15px;
+}
+.name-box{
+    text-align:center;
+    margin-bottom:20px;
+}
+.name-box input{
+    width:100%;
+    max-width:260px;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #bbb;
+    font-size:15px;
+}
+
+/*--------------- GRID ---------------*/
+.marks-grid{
+    display:grid;
+    grid-template-columns:1.3fr repeat(3,1fr);
+    gap:8px;
+    align-items:center;
+}
+.head{
+    font-weight:600;
+    text-align:center;
+    font-size:14px;
+}
+.subject{
+    font-weight:500;
+    font-size:14px;
+}
+input{
+    width:100%;
+    padding:8px;
+    text-align:center;
+    border-radius:8px;
+    border:1px solid #aaa;
+    font-size:14px;
+}
+.targets{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:8px;
+    margin-top:10px;
+    font-size:14px;
+}
+
+button{
+    margin-top:22px;
+    width:100%;
+    padding:13px;
+    font-size:16px;
+    border:none;
+    border-radius:12px;
+    background:#2a74ff;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+button:hover{ background:#1f5fe0; }
+
+/*--------------- CARDS ---------------*/
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:12px;
+    margin-top:25px;
+}
+.card{
+    padding:18px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 18px rgba(0,0,0,0.1);
+    border-top:6px solid;
+}
+.good{
+    background:#f0fffa;
+    border-color:#20c997;
+    color:#128a63;
+}
+.bad{
+    background:#fff5f5;
+    border-color:#ff4d4d;
+    color:#b30000;
+}
+.need{
+    font-size:22px;
+    font-weight:700;
+    margin:5px 0;
+}
+
+.download{
+    margin-top:20px;
+    background:#20c997;
+}
+.download:hover{ background:#169b72; }
+
+.footer{
+    margin-top:12px;
+    text-align:center;
+    font-size:12px;
+    color:#555;
+}
+
+/*--------------- MOBILE FIX ---------------*/
+@media(max-width:600px){
+    .marks-grid{
+        grid-template-columns:1fr;
+    }
+    .head{ display:none; }
+    .targets{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="box" id="capture">
+
+<h2>Final Exam Marks Calculator</h2>
+
+<div class="name-box">
+    <input id="studentName" placeholder="Enter your name">
+</div>
+
+<h3>Internal Marks</h3>
+<div class="marks-grid">
+    <div></div>
+    <div class="head">PT-1</div>
+    <div class="head">Half-Yearly</div>
+    <div class="head">PT-3</div>
+
+    <div class="subject">Physics</div>
+    <input id="phy1"><input id="phy3"><input id="phy2">
+
+    <div class="subject">Chemistry</div>
+    <input id="chem1"><input id="chem3"><input id="chem2">
+
+    <div class="subject">Math / Bio</div>
+    <input id="math1"><input id="math3"><input id="math2">
+
+    <div class="subject">CS</div>
+    <input id="cs1"><input id="cs3"><input id="cs2">
+
+    <div class="subject">English</div>
+    <input id="eng1"><input id="eng3"><input id="eng2">
+</div>
+
+<h3>Target Marks</h3>
+<div class="targets">
+    Physics (70) <input id="pz">
+    Chemistry (70) <input id="cz">
+    Math/Bio (80) <input id="mz">
+    CS (70) <input id="csz">
+    English (80) <input id="ez">
+</div>
+
+<button onclick="calculateMarks()">Calculate</button>
+
+<div class="cards" id="output"></div>
+
+<button class="download" onclick="downloadResult()">Download Result</button>
+
+<div class="footer">Negative value = target already achieved ✅ <br> Drako AKA Deepak Working For You! </div>
+
+</div>
+
+<script>
+function calculateMarks(){
+    const v=id=>Number(document.getElementById(id).value||0);
+
+    let data=[
+        ["Physics",(((v("pz")*10)-7*((v("phy1")+v("phy2"))/4+(v("phy3")/7)*3))/5)],
+        ["Chemistry",(((v("cz")*10)-7*((v("chem1")+v("chem2"))/4+(v("chem3")/7)*3))/5)],
+        ["Math/Bio",(((v("mz")*10)-8*((v("math1")+v("math2"))/4+(v("math3")/8)*3))/5)],
+        ["CS",(((v("csz")*10)-7*((v("cs1")+v("cs2"))/4+(v("cs3")/7)*3))/5)],
+        ["English",(((v("ez")*10)-8*((v("eng1")+v("eng2"))/4+(v("eng3")/8)*3))/5)]
+    ];
+
+    const out=document.getElementById("output");
+    out.innerHTML="";
+
+    data.forEach(d=>{
+        let val=d[1].toFixed(2);
+        let good=val<=30;
+        out.innerHTML+=`
+        <div class="card ${good?"good":"bad"}">
+            <h4>${d[0]}</h4>
+            <div class="need">${good?"✅":val}</div>
+            <small>${good?"Target achieved":"Marks needed in final"}</small>
+        </div>`;
+    });
+}
+
+function downloadResult(){
+    html2canvas(document.getElementById("capture")).then(c=>{
+        let a=document.createElement("a");
+        a.download="marks-result.png";
+        a.href=c.toDataURL();
+        a.click();
+    });
+}
+const inputs = Array.from(document.querySelectorAll("input"));
+
+inputs.forEach((inp, i) => {
+    inp.addEventListener("keydown", e => {
+        if (["ArrowRight","Enter"].includes(e.key)) {
+            e.preventDefault();
+            inputs[i+1]?.focus();
+        }
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            inputs[i-1]?.focus();
+        }
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            inputs[i+1]?.focus();
+        }
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            inputs[i-1]?.focus();
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
