@@ -219,7 +219,7 @@ function calculateMarks(){
 
     data.forEach(d=>{
         let val=d[1].toFixed(2);
-        let good=val<=30;
+        let good=val<=00;
         out.innerHTML+=`
         <div class="card ${good?"good":"bad"}">
             <h4>${d[0]}</h4>
